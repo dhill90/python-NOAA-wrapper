@@ -18,10 +18,9 @@ class Unit(object):
 # Class for gathering unsummarized data.
 class Forecast(object):
     url = 'http://graphical.weather.gov/xml/sample_products/browser_interface/ndfdXMLclient.php?'
-    lat = ''
-    lon = ''
+    list_lat_lon = []
     prod = Product.time-series
-    unit = Unit.english
+    unt = Unit.english
     begin = ''
     end = ''
     pass
@@ -29,9 +28,23 @@ class Forecast(object):
     def __init__():
         pass
 
-    def single_point():
-        pass
+    # @params: list [[lat, lon]], begin, end, NDFD elements
+    # @return: a dictionary with information about the NDFD elements
+    def single_point(list_lat_lon,begin,end,elements):
+        # Since we are only grabbing a single point... This is no big deal.
+        listLatLon = "listLatLon=", list_lat_lon[0][0], ",", list_lat_lon[0][1]
+        product = "&product=", prod.name
+        times = "&begin=", begin, "&end=", end
+        unit = "&Unit=", unt.name
+        element_string = ""
+        for elem in elements:
+            new_element = "&", elem, "=", elem
+            element_string += new_element
+        single_url = url + listLatLon + product + times + unit + element_string
+        return single_url
 
+    # @params: list [[lat, lon],[lat,lon]] product, begin, end, unit, NDFD elements
+    # @return: a dictionary with information about the NDFD elements
     def multi_point():
         pass
 
