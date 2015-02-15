@@ -45,8 +45,19 @@ class Forecast(object):
 
     # @params: list [[lat, lon],[lat,lon]] product, begin, end, unit, NDFD elements
     # @return: a dictionary with information about the NDFD elements
-    def multi_point():
-        pass
+    def multi_point(list_lat_lon,begin,end,elements):
+        listLatLon = "listLatLon=", list_lat_lon[0][0], ",", list_lat_lon[0][1]
+        for latlon in list_lat_lon[1:]:
+            listLatLon += " ", latlon[0], ",", latlong[1]
+        product = "&product=", prod.name
+        times = "&begin=", begin, "&end=", end
+        unit = "&Unit=", unt.name
+        element_string = ""
+        for elem in elements:
+            new_element = "&", elem, "=", elem
+            element_string += new_element
+        multi_url = url + listLatLon + product + times + unit + element_string
+        return single_url
 
     def subgrid():
         pass
