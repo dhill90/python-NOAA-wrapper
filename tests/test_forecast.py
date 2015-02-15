@@ -1,8 +1,8 @@
 import unittest
 
-import NOAAweather
+import NOAAweather.forecast
 
 class NOAAweatherTester(unittest.TestCase):
-    def setUpl(self):
+    def setUp(self):
         pass
 

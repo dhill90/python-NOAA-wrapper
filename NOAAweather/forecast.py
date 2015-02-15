@@ -1,63 +1,54 @@
-import urllib2
-import xml
-import datetime
-import Enum
-
-class Products(object):
-    # Most used - receives all data between given 'begin' and 'end' times.
-    time-series = 0
-    # Unused - receives only data on maxt, mint, sky, wx, and icons for 'begin' and 'end' times.
-    glance = 1
-
-class Unit(object):
-    #English
-    e = 0
-    #Metric
-    m = 1
+try:
+    import urllib2
+    assert urllib2
+    import xml
+    assert xml
+    import xmltodict
+    assert xmltodict
+    import datetime
+    assert datetime
+    import Enum
+    assert Enum
+except ImportError:
+    pass
 
 # Class for gathering unsummarized data.
 class Forecast(object):
+    # This object is used to make a variety of calls to the weather weather.gov ndfdxmlclient.
+    # Hopefully the object will appear as more of a module for pure functions.
     url = 'http://graphical.weather.gov/xml/sample_products/browser_interface/ndfdXMLclient.php?'
-    list_lat_lon = []
-    prod = Product.time-series
-    unt = Unit.english
-    begin = ''
-    end = ''
-    pass
 
-    def __init__():
-        pass
+    def __init__(self):
+        self.list_lat_lon = []
+        self.prod = 'time-series'
+        self.unt = 'e'
+        self.begin = ''
+        self.end = ''
+
+    def __point_url_construction__(self,list_lat_lon,begin,end,elements):
+        listLatLon = "listLatLon={},{}".format(str(list_lat_lon[0][0]), str(list_lat_lon[0][1]))
+        for lat,lon in list_lat_lon[1:]:
+            listLatLon = "{} {},{}".format(listLatLong, str(lat), str(lon))
+        product = "&product={}".format(self.prod)
+        times = "&begin={}&end={}".format(begin, end)
+        unit = "&Unit={}".format(self.unt)
+        element_string = ""
+        for elem in elements:
+            new_element = "&{0}={0}".format(elem)
+            element_string = "{}{}".format(element_string,new_element)
+        return self.url + listLatLon + product + times + unit + element_string
 
     # @params: list [[lat, lon]], begin, end, NDFD elements
     # @return: a dictionary with information about the NDFD elements
-    def single_point(list_lat_lon,begin,end,elements):
-        # Since we are only grabbing a single point... This is no big deal.
-        listLatLon = "listLatLon=", list_lat_lon[0][0], ",", list_lat_lon[0][1]
-        product = "&product=", prod.name
-        times = "&begin=", begin, "&end=", end
-        unit = "&Unit=", unt.name
-        element_string = ""
-        for elem in elements:
-            new_element = "&", elem, "=", elem
-            element_string += new_element
-        single_url = url + listLatLon + product + times + unit + element_string
+    def single_point(self,list_lat_lon,begin,end,elements):
+        single_url = self.__point_url_construction__(list_lat_lon,begin,end,elements)
         return single_url
 
     # @params: list [[lat, lon],[lat,lon]] product, begin, end, unit, NDFD elements
     # @return: a dictionary with information about the NDFD elements
-    def multi_point(list_lat_lon,begin,end,elements):
-        listLatLon = "listLatLon=", list_lat_lon[0][0], ",", list_lat_lon[0][1]
-        for latlon in list_lat_lon[1:]:
-            listLatLon += " ", latlon[0], ",", latlong[1]
-        product = "&product=", prod.name
-        times = "&begin=", begin, "&end=", end
-        unit = "&Unit=", unt.name
-        element_string = ""
-        for elem in elements:
-            new_element = "&", elem, "=", elem
-            element_string += new_element
-        multi_url = url + listLatLon + product + times + unit + element_string
-        return single_url
+    def multi_point(self,list_lat_lon,begin,end,elements):
+        multi_url = self.__point_url_construction__(list_lat_lon,begin,end,elements)
+        return multi_url
 
     def subgrid():
         pass
@@ -94,3 +85,6 @@ class PointFinder(object):
 
     def corners_grid():
         pass
+
+obj = Forecast()
+print (obj.single_point([(37.2988451,-78.40321589999999)], '','',['maxt','mint','pop12']))
