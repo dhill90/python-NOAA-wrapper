@@ -91,4 +91,5 @@ class PointFinder(object):
 
 obj = Forecast()
 #print(obj.__point_url_construction__([(37.2988451,-78.40321589999999)], '','',['maxt','mint','pop12']))
-print (obj.single_point([(37.2988451,-78.40321589999999)], '','',['maxt','mint','pop12']))
+print (obj.single_point([(37.2988451,-78.40321589999999),(37.299,-78.3011)], '','',['maxt','mint','pop12']))
+print (obj.multi_point([(37.2988451,-78.40321589999999),(37.299,-78.3011)], '','',['maxt','mint','pop12']))
