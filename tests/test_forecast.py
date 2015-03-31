@@ -1,5 +1,4 @@
 import unittest
-
 from NOAAweather import forecast
 
 class NOAAweatherTester(unittest.TestCase):
@@ -44,6 +43,13 @@ class NOAAweatherTester(unittest.TestCase):
         self.assertIn('Cloud Cover Amount 1',response)
         self.assertIn('Snow Amount 1',response)
         self.assertIn('Temperature 1',response)
+
+    def test_simple_calls(self):
+        self.assertIn('Daily Maximum Temperature 0', forecast.maxt(37.2988,-78.4032))
+        self.assertIn('Daily Minimum Temperature 0', forecast.mint(37.2988,-78.4032))
+        self.assertIn('Temperature 0', forecast.temp(37.2988,-78.4032))
+        self.assertIn('12 Hourly Probability of Precipitation 0', forecast.pop12(37.2988,-78.4032))
+        self.assertIn('Liquid Precipitation Amount 0', forecast.qpf(37.2988,-78.4032))
 
 if __name__ == '__main__':
     unittest.main()

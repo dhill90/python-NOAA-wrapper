@@ -7,6 +7,35 @@ try:
 except ImportError:
     pass
 
+# TODO: Should I hardcode coordinates into these wrappers?
+def maxt(lat, lon):
+    lst = [(lat, lon)]
+    obj = Forecast()
+    response = obj.single_point(lst, '','', ['maxt'])
+    return response
+def mint(lat, lon):
+    lst = [(lat, lon)]
+    obj = Forecast()
+    response = obj.single_point(lst, '','', ['mint'])
+    return response
+def temp(lat, lon):
+    lst = [(lat, lon)]
+    obj = Forecast()
+    response = obj.single_point(lst, '','', ['temp'])
+    return response
+def pop12(lat, lon):
+    lst = [(lat, lon)]
+    obj = Forecast()
+    response = obj.single_point(lst, '','', ['pop12'])
+    return response
+def qpf(lat, lon):
+    lst = [(lat, lon)]
+    obj = Forecast()
+    response = obj.single_point(lst, '','', ['qpf'])
+    return response
+
+
+
 # Class for gathering unsummarized data.
 class Forecast(object):
     # This object is used to make a variety of calls to the weather weather.gov ndfdxmlclient.
